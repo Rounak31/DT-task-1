@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Page</title>
+    <style>
+        .task {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .asset {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: 315px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="project-container"></div>
+
+    <script>
+        // Local JSON data
+        const project = {
+            "tasks": [
+                {
+                    "task_id": 18882,
+                    "task_title": "Explore the world of management",
+                    "task_description": "As a project manager, you play an important role in leading a project through initiation, planning, execution, monitoring, controlling and completion. How? Do you want to manage each and every step of your life?",
+                    "status": "notworkyet",
+                    "assets": [
+                        {
+                            "asset_id": 18883,
+                            "asset_title": "Technical Project Management",
+                            "asset_description": "Story of Alignment\nScope of Agility\nSpecific Accountable\nStaggering Approach\n\n",
+                            "asset_content": "https://www.youtube.com/embed/TiMRwri1xJ8",
+                            "asset_type": "display_asset",
+                            "asset_content_type": "video"
+                        },
+                        {
+                            "asset_id": 18884,
+                            "asset_title": "Threadbuild",
+                            "asset_description": "Watch the video and thread build, and jot out key threads while watching that video.",
+                            "asset_content": "",
+                            "asset_type": "input_asset",
+                            "asset_content_type": "threadbuilder"
+                        },
+                        {
+                            "asset_id": 18885,
+                            "asset_title": "Structure you pointers",
+                            "asset_description": "Write a 400-500 word article, from your thread. Publish your understanding, and showcase your learning to the entire world.",
+                            "asset_content": "",
+                            "asset_type": "input_asset",
+                            "asset_content_type": "article"
+                        },
+                        {
+                            "asset_id": 18886,
+                            "asset_title": "4SA Method",
+                            "asset_description": "To explore more read more",
+                            "asset_content": "https://dtthon.deepthought.education/sharer?id=01aa3cff-db8e-8d9d-afc0-1671715937878",
+                            "asset_type": "display_asset",
+                            "asset_content_type": "article"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Render the project
+        function renderProject(project) {
+            const projectContainer = document.getElementById('project-container');
+
+            project.tasks.forEach(task => {
+                const taskHtml = createTaskHtml(task);
+                projectContainer.innerHTML += taskHtml;
+            });
+        }
+
+        function createTaskHtml(task) {
+            let taskHtml = `
+                <div class="task">
+                    <h2>${task.task_title}</h2>
+                    <p>${task.task_description}</p>
+                    <div class="assets">
+            `;
+
+            task.assets.forEach(asset => {
+                taskHtml += createAssetHtml(asset);
+            });
+
+            taskHtml += `
+                    </div>
+                </div>
+            `;
+            return taskHtml;
+        }
+
+        function createAssetHtml(asset) {
+            let assetHtml = `
+                <div class="asset">
+                    <h3>${asset.asset_title}</h3>
+                    <p>${asset.asset_description}</p>
+            `;
+
+            if (asset.asset_content_type === 'video') {
+                assetHtml += `<iframe src="${asset.asset_content}" frameborder="0" allowfullscreen></iframe>`;
+            } else if (asset.asset_content_type === 'article') {
+                assetHtml += `<a href="${asset.asset_content}" target="_blank">Read more</a>`;
+            } else if (asset.asset_content_type === 'threadbuilder') {
+                assetHtml += `<textarea placeholder="Write your thoughts here..."></textarea>`;
+            }
+
+            assetHtml += `</div>`;
+            return assetHtml;
+        }
+
+        // Call the render function with the local JSON data
+        renderProject(project);
+    </script>
+</body>
+</html>
